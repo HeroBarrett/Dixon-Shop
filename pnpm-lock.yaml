@@ -1584,14 +1584,14 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   '@uni-helper/uni-app-types@1.0.0-alpha.6':
-    resolution: {integrity: sha512-t9AKDYBmDaz4IW0fgtBt25ubEzf7kyUeMlHaBaG5nyNGd6pVuDpYkABhsnNPDiZcaHAoN6SbX1SQQx5axDOWbA==}
+    resolution: {integrity: sha512-t9AKDYBmDaz4IW0fgtBt25ubEzf7kyUeMlHaBaG5nyNGd6pVuDpYkABhsnNPDiZcaHAoN6SbX1SQQx5axDOWbA==, tarball: https://registry.npmmirror.com/@uni-helper/uni-app-types/-/uni-app-types-1.0.0-alpha.6.tgz}
     engines: {node: '>=14.18'}
     peerDependencies:
       typescript: ^5.0.0
       vue: ^3.0.0
 
   '@uni-helper/uni-ui-types@1.0.0-alpha.6':
-    resolution: {integrity: sha512-2KuAup2M7rPVzpLaXhhnxCD/Cs5VQYiqzC9XNI/VZuA88+ApPmHzkwyS0THSHnz1VbDIGX/Ju69nj+mApfYKDw==}
+    resolution: {integrity: sha512-2KuAup2M7rPVzpLaXhhnxCD/Cs5VQYiqzC9XNI/VZuA88+ApPmHzkwyS0THSHnz1VbDIGX/Ju69nj+mApfYKDw==, tarball: https://registry.npmmirror.com/@uni-helper/uni-ui-types/-/uni-ui-types-1.0.0-alpha.6.tgz}
     engines: {node: '>=14.18'}
     peerDependencies:
       '@uni-helper/uni-app-types': 1.0.0-alpha.6
