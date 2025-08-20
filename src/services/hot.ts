@@ -1,5 +1,5 @@
 import type { PageParams } from '@/types/global'
-import { http } from './http'
+import { http } from '../utils/http'
 import type { HotResult } from '@/types/hot'
 
 type HotParams = PageParams & { subType?: string }

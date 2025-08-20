@@ -1,7 +1,7 @@
 // /src/pages/hot/hot.vue
 <script setup lang="ts">
 import type { SubTypeItem } from '@/types/hot'
-import { getHotRecommendAPI } from '@/utils/hot'
+import { getHotRecommendAPI } from '@/services/hot'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 
