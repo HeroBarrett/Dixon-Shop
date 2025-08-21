@@ -50,6 +50,12 @@
 			"style": {
 				"navigationBarTitleText": "热门推荐"
 			}
+		},
+		{
+			"path": "pages/goods/goods",
+			"style": {
+				"navigationBarTitleText": "尚品详情"
+			}
 		}
 	],
 	"globalStyle": {
