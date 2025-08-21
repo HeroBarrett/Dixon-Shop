@@ -6,8 +6,8 @@ import { onScopeDispose, ref } from 'vue'
 import type { CategoryItem, BannerItem, HotItem } from '@/types/home'
 import CategoryPanel from './components/CategoryPanel.vue'
 import HotPanel from './components/HotPanel.vue'
-import type { XtxGuessInstance } from '@/types/component'
 import PageSkeleton from './components/PageSkeleton.vue'
+import { useGuessList } from '@/composables'
 
 // 获取轮播图数据
 const bannerList = ref<BannerItem[]>([])
@@ -43,13 +43,8 @@ onLoad(async () => {
 })
 
 // 获取猜你喜欢组件实例
-const guessRef = ref<XtxGuessInstance>()
 // 滚动触底
-const onScolltolower = () => {
-  // console.log('触底了')
-  guessRef.value?.getMore()
-  // console.log('发请求了')
-}
+const { guessRef, onScrolltolower } = useGuessList()
 
 const isTriggered = ref(false)
 // 自定义下拉刷新被触发
@@ -81,7 +76,7 @@ const onRefresherrefresh = async () => {
   <scroll-view
     refresher-enabled
     @refresherrefresh="onRefresherrefresh"
-    @scrolltolower="onScolltolower"
+    @scrolltolower="onScrolltolower"
     :refresher-triggered="isTriggered"
     class="scroll-view"
     scroll-y
