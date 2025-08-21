@@ -1,7 +1,34 @@
-// src/pages/login/login.vue
-
 <script setup lang="ts">
-//
+import { postLoginWxMinAPI, postLoginWxMinSimpleAPI } from '@/services/login'
+import { onLoad } from '@dcloudio/uni-app'
+
+// 获取 code 登录凭证
+let code = ''
+onLoad(async () => {
+  const res = await wx.login()
+  code = res.code
+})
+
+// 获取用户手机号码 （企业中的写法）
+const onGetphonenumber: UniHelper.ButtonOnGetphonenumber = async (ev) => {
+  console.log(ev)
+  const encryptedData = ev.detail.encryptedData!
+  const iv = ev.detail.iv!
+
+  const res = await postLoginWxMinAPI({
+    code,
+    encryptedData,
+    iv,
+  })
+  console.log(res)
+}
+
+// 模拟手机号码快捷登录 (开发、练习)
+const onGetphonenumberSimple = async () => {
+  const res = await postLoginWxMinSimpleAPI('15889578714')
+  console.log(res)
+  uni.showToast({ icon: 'none', title: '登陆成功' })
+}
 </script>
 
 <template>
@@ -18,7 +45,7 @@
       <!-- <button class="button phone">登录</button> -->
 
       <!-- 小程序端授权登录 -->
-      <button class="button phone">
+      <button class="button phone" open-type="getPhoneNumber" @getphonenumber="onGetphonenumber">
         <text class="icon icon-phone"></text>
         手机号快捷登录
       </button>
@@ -28,7 +55,7 @@
         </view>
         <view class="options">
           <!-- 通用模拟登录 -->
-          <button>
+          <button @tap="onGetphonenumberSimple">
             <text class="icon icon-phone">模拟快捷登录</text>
           </button>
         </view>
