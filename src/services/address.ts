@@ -31,3 +31,35 @@ export const getMemberAddressAPI = () => {
     url: '/member/address',
   })
 }
+
+// 获取收货地址详情
+// GET
+// /member/address/{id}
+/**
+ * 获取收货地址详情
+ * @param id 地址id
+ * @returns
+ */
+export const getMemberAddressByIdAPI = (id: string) => {
+  return http<AddressItem>({
+    url: `/member/address/${id}`,
+    method: 'GET',
+  })
+}
+
+// 修改收货地址
+// PUT
+// /member/address/{id}
+/**
+ * 修改收货地址
+ * @param id 修改的id
+ * @param data 表单数据
+ * @returns
+ */
+export const putMemberAddressByIdAPI = (id: string, data: AddressParams) => {
+  return http({
+    url: `/member/address/${id}`,
+    method: 'PUT',
+    data,
+  })
+}

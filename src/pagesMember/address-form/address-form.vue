@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { postMemberAddressAPI } from '@/services/address'
+import {
+  getMemberAddressByIdAPI,
+  postMemberAddressAPI,
+  putMemberAddressByIdAPI,
+} from '@/services/address'
+import { putMemberProfileAPI } from '@/services/profile'
+import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 
 // 表单数据
@@ -16,6 +22,21 @@ const form = ref({
 
 // 获取页面参数
 const query = defineProps<{ id?: string }>()
+
+// 获取收货地址详情数据
+const getMemberAddressByIdData = async () => {
+  if (query.id) {
+    // 发送请求
+    const res = await getMemberAddressByIdAPI(query.id)
+    // 数据合并表单
+    Object.assign(form.value, res.result)
+  }
+}
+
+// 页面加载
+onLoad(() => {
+  getMemberAddressByIdData()
+})
 // 动态设置标题
 uni.setNavigationBarTitle({ title: query.id ? '修改地址' : '新建地址' })
 
@@ -41,11 +62,17 @@ const onSwitchChange: UniHelper.SwitchOnChange = (ev) => {
 
 // 提交表单
 const onSubmit = async () => {
-  // 新建地址请求
-  await postMemberAddressAPI(form.value)
+  if (query.id) {
+    // 修改地址
+    putMemberAddressByIdAPI(query.id, form.value)
+  } else {
+    // 新建地址
+    // 新建地址请求
+    await postMemberAddressAPI(form.value)
+  }
   // console.log(res)
   // 成功提示
-  uni.showToast({ icon: 'success', title: '添加成功' })
+  uni.showToast({ icon: 'success', title: query.id ? '修改成功' : '添加成功' })
   // 返回上一页
   setTimeout(() => {
     uni.navigateBack()
