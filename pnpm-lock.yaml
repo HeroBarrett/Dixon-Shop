@@ -51,8 +51,8 @@ importers:
         specifier: 3.0.0-alpha-3081220230802001
         version: 3.0.0-alpha-3081220230802001(postcss@8.5.6)(vue@3.5.19(typescript@5.9.2))
       '@dcloudio/uni-ui':
-        specifier: ^1.4.23
-        version: 1.5.11
+        specifier: 1.4.23
+        version: 1.4.23
       pinia:
         specifier: 2.0.27
         version: 2.0.27(typescript@5.9.2)(vue@3.5.19(typescript@5.9.2))
@@ -846,8 +846,9 @@ packages:
   '@dcloudio/uni-stat@3.0.0-alpha-3081220230802001':
     resolution: {integrity: sha512-A3tfKOkdbdbFlTStA9rWkwHp7OxyXXHmowGPvnxD/xoKippEWg9n3SOsh98ow1HNc9mcha1i8thBHawUnsna6g==, tarball: https://registry.npmmirror.com/@dcloudio/uni-stat/-/uni-stat-3.0.0-alpha-3081220230802001.tgz}
 
-  '@dcloudio/uni-ui@1.5.11':
-    resolution: {integrity: sha512-DBtk046ofmeFd82zRI7d89SoEwrAxYzUN3WVPm1DIBkpLPG5F5QDNkHMnZGu2wNrMEmGBjBpUh3vqEY1L3jaMw==, tarball: https://registry.npmmirror.com/@dcloudio/uni-ui/-/uni-ui-1.5.11.tgz}
+  '@dcloudio/uni-ui@1.4.23':
+    resolution: {integrity: sha512-FJRkhL240gin9WvOunY38Yi2/0FzTLVlEI3dxcjzaV1oYa81o+IWEf/29YDiRrsHuvYDk9g600QgiZLC+A6ycA==, tarball: https://registry.npmmirror.com/@dcloudio/uni-ui/-/uni-ui-1.4.23.tgz}
+    deprecated: '@1.4.29'
 
   '@dcloudio/uni-vue-devtools@3.0.0-alpha-3080220230511001':
     resolution: {integrity: sha512-dpDEnWF5hTsPve2pII/srsQYc6wdZbUt9Ejwy57TfuRz6JmPv+IBLTlGkIiZFo1RgQ3GmYyyFzKPuKiMfeLjIg==, tarball: https://registry.npmmirror.com/@dcloudio/uni-vue-devtools/-/uni-vue-devtools-3.0.0-alpha-3080220230511001.tgz}
@@ -5508,7 +5509,7 @@ snapshots:
       - ts-node
       - vue
 
-  '@dcloudio/uni-ui@1.5.11': {}
+  '@dcloudio/uni-ui@1.4.23': {}
 
   '@dcloudio/uni-vue-devtools@3.0.0-alpha-3080220230511001(postcss@8.5.6)(vue@3.5.19(typescript@5.9.2))':
     dependencies:
