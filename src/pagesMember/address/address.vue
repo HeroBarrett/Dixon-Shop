@@ -42,7 +42,7 @@ onShow(() => {
             </view>
             <!-- 右侧插槽 -->
             <template v-slot:right>
-              <button>删除</button>
+              <button class="delete-button">删除</button>
             </template>
           </uni-swipe-action-item>
         </uni-swipe-action>
