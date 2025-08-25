@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { deleteMemberCartAPI, getMemberCartAPI } from '@/services/cart'
+import type { InputNumberBoxEvent } from '@/components/vk-data-input-number-box/vk-data-input-number-box'
+import {
+  deleteMemberCartAPI,
+  getMemberCartAPI,
+  putMemberCartBySkuIdAPI,
+  putMemberCartSelectedAPI,
+} from '@/services/cart'
 import { useMemberStore } from '@/stores'
 import type { CartItem } from '@/types/cart'
 import { onShow } from '@dcloudio/uni-app'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 // 获取会员Store
 const memberStore = useMemberStore()
@@ -37,6 +43,64 @@ const onDeleteCart = (skuId: string) => {
     },
   })
 }
+
+// 修改商品数量
+const onChangeCount = (ev: InputNumberBoxEvent) => {
+  putMemberCartBySkuIdAPI(ev.index, { count: ev.value })
+}
+
+// 修改选中状态-单品
+const onChangeSelected = (item: CartItem) => {
+  // console.log(item)
+  // 是否选中取反
+  item.selected = !item.selected
+  // 后端数据更新
+  putMemberCartBySkuIdAPI(item.skuId, { selected: item.selected })
+}
+
+// 计算全选状态
+const isSelectedAll = computed(() => {
+  return cartList.value.length && cartList.value.every((v) => v.selected)
+})
+
+// 修改选中状态-全选
+const onChangeselectedAll = () => {
+  const _isSelectedAll = !isSelectedAll.value
+  // 前端数据更新
+  cartList.value.forEach((item) => {
+    item.selected = _isSelectedAll
+  })
+  // 后端数据更新
+  putMemberCartSelectedAPI({ selected: _isSelectedAll })
+}
+
+// 计算选中单品列表
+const selectedCartList = computed(() => {
+  return cartList.value.filter((v) => v.selected)
+})
+
+// 计算选中的总件数
+const selectedCartLictCount = computed(() => {
+  return selectedCartList.value.reduce((sum, item) => sum + item.count, 0)
+})
+
+// 选中的总金额
+const selectCartListMoney = computed(() => {
+  return selectedCartList.value
+    .reduce((sum, item) => sum + item.count * item.nowPrice, 0)
+    .toFixed(2)
+})
+
+const gotoPayment = () => {
+  if (selectedCartLictCount.value === 0) {
+    return uni.showToast({
+      icon: 'none',
+      title: '请选择商品',
+    })
+  }
+  // 跳转到结算页
+  uni.showToast({ title: '等待完成' })
+}
 </script>
 
 <template>
@@ -57,7 +121,11 @@ const onDeleteCart = (skuId: string) => {
             <!-- 商品信息 -->
             <view class="goods">
               <!-- 选中状态 -->
-              <text class="checkbox" :class="{ checked: item.selected }"></text>
+              <text
+                @tap="onChangeSelected(item)"
+                class="checkbox"
+                :class="{ checked: item.selected }"
+              ></text>
               <navigator
                 :url="`/pages/goods/goods?id=${item.id}`"
                 hover-class="none"
@@ -72,9 +140,13 @@ const onDeleteCart = (skuId: string) => {
               </navigator>
               <!-- 商品数量 -->
               <view class="count">
-                <text class="text">-</text>
-                <input class="input" type="number" :value="item.count.toString()" />
-                <text class="text">+</text>
+                <vk-data-input-number-box
+                  v-model="item.count"
+                  :min="1"
+                  :max="item.stock"
+                  @change="onChangeCount"
+                  :index="item.skuId"
+                />
               </view>
             </view>
             <!-- 右侧删除按钮 -->
@@ -96,11 +168,17 @@ const onDeleteCart = (skuId: string) => {
       </view>
       <!-- 吸底工具栏 -->
       <view class="toolbar">
-        <text class="all" :class="{ checked: true }">全选</text>
+        <text @tap="onChangeselectedAll" class="all" :class="{ checked: isSelectedAll }">全选</text>
         <text class="text">合计:</text>
-        <text class="amount">100</text>
+        <text class="amount">{{ selectCartListMoney }}</text>
         <view class="button-grounp">
-          <view class="button payment-button" :class="{ disabled: true }"> 去结算(10) </view>
+          <view
+            @tap="gotoPayment"
+            class="button payment-button"
+            :class="{ disabled: selectedCartLictCount === 0 }"
+          >
+            去结算({{ selectedCartLictCount }})
+          </view>
         </view>
       </view>
     </template>
